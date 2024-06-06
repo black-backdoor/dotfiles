@@ -15,6 +15,11 @@ success () {
   printf "[\033[00;32mOK\033[0m] $1\n"
 }
 
+warning() {
+  printf "[\033[38;5;208mWARN\033[0m] $1\n"
+  echo ''
+}
+
 fail () {
   printf "[\033[0;31mFAIL\033[0m] $1\n"
   echo ''
