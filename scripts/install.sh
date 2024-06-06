@@ -28,16 +28,16 @@ fail () {
 # -------------------
 
 function ask() {
-    printf "[\033[0;33m??\033[0m] $1\n"
-	printf " \033[0;32m>>>\033[0m "
-    read -p "(Y/n): " resp
-    if [ -z "$resp" ]; then
-        response_lc="y" # empty is Yes
-    else
-        response_lc=$(echo "$resp" | tr '[:upper:]' '[:lower:]') # case insensitive
-    fi
-
-    [ "$response_lc" = "y" ]
+  printf "[\033[0;33m??\033[0m] $1\n"
+  printf " \033[0;32m>>>\033[0m "
+  read -p "(Y/n): " resp
+  if [ -z "$resp" ]; then
+    response_lc="y" # empty is Yes
+  else
+    response_lc=$(echo "$resp" | tr '[:upper:]' '[:lower:]') # case insensitive
+  fi
+  
+  [ "$response_lc" = "y" ]
 }
 
 # -------------------
@@ -68,15 +68,15 @@ echo ''
 echo "---------------- DEPENDENCIES ----------------"
 
 if [ -e $HOME/dotfiles/scripts/dependencies.sh ]; then
-    echo "Found dependencies.sh"
-	chmod +x $HOME/dotfiles/scripts/dependencies.sh
-	
-	echo "installing dependencies"
-	sudo $HOME/dotfiles/scripts/dependencies.sh
-	
-	success "Successfully ran dependencies.sh"
+  echo "Found dependencies.sh"
+  chmod +x $HOME/dotfiles/scripts/dependencies.sh
+  
+  echo "installing dependencies"
+  sudo $HOME/dotfiles/scripts/dependencies.sh
+  
+  success "Successfully ran dependencies.sh"
 else
-    warning "dependencies.sh not found. Some features may not work correctly."
+  warning "dependencies.sh not found. Some features may not work correctly."
 fi
 
 
@@ -84,8 +84,8 @@ fi
 echo ''
 echo "---------------- SETUP SYMLINKS ----------------"
 #if ! apt install stow -y > /dev/null; then
-#    fail "Error installing 'stow' package"
-#    exit 1
+#  fail "Error installing 'stow' package"
+#  exit 1
 #fi
 
 
@@ -113,8 +113,8 @@ cd "$HOME/dotfiles" || { fail "Failed to cd $HOME/dotfiles"; exit 1; }
 
 echo "Use 'stow' to create symlinks in the parent directory (user's home directory)"
 if ! stow .; then
-    fail "Error running stow."
-    exit 1
+  fail "Error running stow."
+  exit 1
 fi
 
 success "Successfully used 'stow' to create symlinks."
@@ -127,20 +127,20 @@ echo "---------------- CUSTOM .bashrc ----------------"
 cd "$HOME"
 
 source_file() {
-    local config_file="$1"
-    local file="$2"
-    
-    # Check if the file is sourced in the config_file
-    if grep -q -P "^\s*(source|\.)\s+\~/$file\b" "$config_file"; then
-        echo "The file '$file' is sourced in the $config_file config."
-    else
-        warning "The file '$file' is not sourced in the $config_file config."
-		if ask "Do you want to modify $config_file to source $file?"; then
-            echo "if [ -f ~/$file ]; then" >> $config_file
-			echo "   source ~/$file" >> $config_file
-			echo "fi" >> $config_file
-        fi
+  local config_file="$1"
+  local file="$2"
+  
+  # Check if the file is sourced in the config_file
+  if grep -q -P "^\s*(source|\.)\s+\~/$file\b" "$config_file"; then
+    echo "The file '$file' is sourced in the $config_file config."
+  else
+    warning "The file '$file' is not sourced in the $config_file config."
+    if ask "Do you want to modify $config_file to source $file?"; then
+      echo "if [ -f ~/$file ]; then" >> $config_file
+      echo "   source ~/$file" >> $config_file
+      echo "fi" >> $config_file
     fi
+  fi
 }
 
 source_file .bashrc .bash_aliases
