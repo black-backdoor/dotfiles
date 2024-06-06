@@ -25,7 +25,14 @@ fail () {
 
 
 if [[ $EUID -ne 0 ]]; then
-  echo "This script must be run as root."
+  fail "This script must be run as root."
   exit 1
 fi
 
+
+
+user="$SUDO_USER"
+if [ -z "$user" ]; then
+  fail "Could not detect non-root user."
+  exit 1
+fi
