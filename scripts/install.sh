@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+# set -e  # Makes the script exit immediately if any command exits with a non-zero status.
 
 # ------- LOG -------
 wait_user () {
