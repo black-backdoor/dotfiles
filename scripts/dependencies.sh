@@ -15,3 +15,4 @@ apt install stow -y
 
 # ---------- USER ----------
 # add your own
+apt install xsel -y  # used for copying to & from clipboard | clipcopy & clippaste commands
