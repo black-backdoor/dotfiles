@@ -27,7 +27,18 @@ fail () {
 
 # -------------------
 
+function ask() {
+    read -p "$1 (Y/n): " resp
+    if [ -z "$resp" ]; then
+        response_lc="y" # empty is Yes
+    else
+        response_lc=$(echo "$resp" | tr '[:upper:]' '[:lower:]') # case insensitive
+    fi
 
+    [ "$response_lc" = "y" ]
+}
+
+# -------------------
 
 if [[ $EUID -ne 0 ]]; then
   fail "This script must be run as root."
@@ -105,3 +116,29 @@ if ! stow .; then
 fi
 
 success "Successfully used 'stow' to create symlinks."
+
+
+
+echo ''
+echo "---------------- CUSTOM .bashrc ----------------"
+
+cd "$HOME"
+
+source_file() {
+    local config_file="$1"
+    local file="$2"
+    
+    # Check if the file is sourced in the config_file
+    if grep -q -P "^\s*(source|\.)\s+\~/$file\b" "$config_file"; then
+        echo "The file '$file' is sourced in the $config_file config."
+    else
+        warning "The file '$file' is not sourced in the $config_file config."
+		if ask "Do you want to modify $config_file to source $file?"; then
+            echo "if [ -f ~/$file ]; then" >> $config_file
+			echo "   source ~/$file" >> $config_file
+			echo "fi" >> $config_file
+        fi
+    fi
+}
+
+source_file .bashrc .bash_aliases
