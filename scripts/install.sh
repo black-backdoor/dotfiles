@@ -92,3 +92,17 @@ find "$HOME" -maxdepth 1 -type l -exec sh -c 'readlink -f "$0" | grep -q "^$HOME
 
 success "Successfully unlinked symbolic links pointing to $target_dir"
 
+
+
+# ----------------
+
+cd $HOME/dotfiles || exit
+
+
+echo "Use 'stow' to create symlinks in the parent directory (user's home directory)"
+if ! stow .; then
+    fail "Error running stow."
+    exit 1
+fi
+
+success "Successfully used 'stow' to create symlinks."
