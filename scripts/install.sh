@@ -49,3 +49,17 @@ echo " HOME Folder: $HOME"
 
 wait_user "Review the settings above and press any key to continue or Ctrl+C to cancel..."
 
+
+
+echo
+echo "---------------- DEPENDENCIES ----------------"
+
+if [ -e $HOME/dotfiles/scripts/dependencies.sh ]; then
+    echo "Found dependencies.sh"
+	chmod +x $HOME/dotfiles/scripts/dependencies.sh
+	
+	echo "installing dependencies"
+	sudo $HOME/dotfiles/scripts/dependencies.sh
+else
+    warning "dependencies.sh not found. Some features may not work correctly."
+fi
