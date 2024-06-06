@@ -28,7 +28,9 @@ fail () {
 # -------------------
 
 function ask() {
-    read -p "$1 (Y/n): " resp
+    printf "[\033[0;33m??\033[0m] $1\n"
+	printf " \033[0;32m>>>\033[0m "
+    read -p "(Y/n): " resp
     if [ -z "$resp" ]; then
         response_lc="y" # empty is Yes
     else
