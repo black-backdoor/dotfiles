@@ -96,8 +96,7 @@ success "Successfully unlinked symbolic links pointing to $target_dir"
 
 # ----------------
 
-cd $HOME/dotfiles || exit
-
+cd "$HOME/dotfiles" || { fail "Failed to cd $HOME/dotfiles"; exit 1; }
 
 echo "Use 'stow' to create symlinks in the parent directory (user's home directory)"
 if ! stow .; then
