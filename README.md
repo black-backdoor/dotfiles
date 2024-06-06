@@ -6,6 +6,8 @@
 When installing the dotfiles, the following functionality is added:
 - Clipboard actions | pbcopy, pbpaste
 - Directory navigation | .., ..., ...., home, root
+- public-ip & local-ip | Get your public and local IP
+- week | current week number
 
 
 
