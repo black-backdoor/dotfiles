@@ -36,3 +36,11 @@ if [ -z "$user" ]; then
   fail "Could not detect non-root user."
   exit 1
 fi
+
+export HOME=/home/$user
+echo -e "Installing dotfiles for \e[34m$user\e[0m in \e[36m$HOME\e[0m"
+echo " USER: $user"
+echo " HOME Folder: $HOME"
+
+wait_user "Review the settings above and press any key to continue or Ctrl+C to cancel..."
+
