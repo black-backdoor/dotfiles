@@ -2,6 +2,13 @@
 
 
 
+## Configuration
+When installing the dotfiles, the following functionality is added:
+- Clipboard actions | pbcopy, pbpaste
+- Directory navigation | .., ..., ...., home, root
+
+
+
 ## Installation
 ```bash
 sudo apt install git

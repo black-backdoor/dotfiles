@@ -144,3 +144,4 @@ source_file() {
 }
 
 source_file .bashrc .bash_aliases
+source_file .bashrc .bash_tools

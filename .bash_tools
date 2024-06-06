@@ -1,0 +1,12 @@
+# ----------- INFO -----------
+# Contains aliases for various command line utilities
+
+
+# --- CLIPBOARD (xsel) ---
+alias pbcopy='xsel --input --clipboard'
+alias pbpaste='xsel --output --clipboard'
+
+alias clipcopy='xsel --input --clipboard'
+alias clippaste='xsel --output --clipboard'
+
+alias p='xsel --output --clipboard'
