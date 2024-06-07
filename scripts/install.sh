@@ -18,6 +18,7 @@ fail () {
 }
 
 user () {
+  echo ''
   printf "[\033[0;33m??\033[0m] $1\n"
 }
 
@@ -38,6 +39,32 @@ ask() {
   fi
   
   [ "$response_lc" = "y" ]
+}
+
+# -------------------
+
+source_file() {
+  # Modify the config file to source the file if it is not already sourced
+
+  local config_file="$1"
+  local file="$2"
+
+  if [ ! -f "$file" ]; then
+    warning "The file '$file' does not exist."
+    return
+  fi
+  
+  # Check if the file is sourced in the config_file
+  if grep -q -P "^\s*(source|\.)\s+\~/$file\b" "$config_file"; then
+    echo "The file '$file' is sourced in the $config_file config."
+  else
+    warning "The file '$file' is not sourced in the $config_file config."
+    if ask "Do you want to modify $config_file to source $file?"; then
+      echo "if [ -f ~/$file ]; then" >> $config_file
+      echo "   source ~/$file" >> $config_file
+      echo "fi" >> $config_file
+    fi
+  fi
 }
 
 # -------------------
@@ -131,23 +158,6 @@ echo ''
 echo "---------------- CUSTOM .bashrc ----------------"
 
 cd "$HOME"
-
-source_file() {
-  local config_file="$1"
-  local file="$2"
-  
-  # Check if the file is sourced in the config_file
-  if grep -q -P "^\s*(source|\.)\s+\~/$file\b" "$config_file"; then
-    echo "The file '$file' is sourced in the $config_file config."
-  else
-    warning "The file '$file' is not sourced in the $config_file config."
-    if ask "Do you want to modify $config_file to source $file?"; then
-      echo "if [ -f ~/$file ]; then" >> $config_file
-      echo "   source ~/$file" >> $config_file
-      echo "fi" >> $config_file
-    fi
-  fi
-}
 
 source_file .bashrc .bash_aliases
 source_file .bashrc .bash_tools
