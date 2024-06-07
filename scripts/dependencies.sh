@@ -1,18 +1,16 @@
 #!/bin/bash
 
-#
-# This script installs the dependencies required for the install.sh script and the dotfiles to work properly. 
-#
+# dependencies.sh
+# This script installs the necessary dependencies for the install.sh script to work correctly.
+# It ensures that all required packages and tools are available on the system before running the installation process.
+
+
 
 # Update the package list
 apt update
 
 
+
 # ---------- SYSTEM / SCRIPT ----------
 apt install git -y
 apt install stow -y
-
-
-# ---------- USER ----------
-# add your own
-apt install xsel -y  # used for copying to & from clipboard | clipcopy & clippaste commands
