@@ -17,13 +17,14 @@ fail () {
   echo ''
 }
 
-# -------------------
-wait_user () {
-  echo ''
+user () {
   printf "[\033[0;33m??\033[0m] $1\n"
-  printf " \033[0;32m>>>\033[0m Press any key to continue"
-  read -n 1 -s -r -p ''
-  echo ''
+}
+
+# -------------------
+
+pause () {
+  read -rp "Press enter to continue..."
 }
 
 ask() {
@@ -59,12 +60,15 @@ echo -e "Installing dotfiles for \e[34m$user\e[0m in \e[36m$HOME\e[0m"
 echo " USER: $user"
 echo " HOME Folder: $HOME"
 
-wait_user "Review the settings above and press any key to continue or Ctrl+C to cancel..."
+user "Review the settings above"
+pause
 
 
 
 echo ''
 echo "---------------- DEPENDENCIES ----------------"
+
+echo "Installing necessary dependencies..."
 
 if [ -e $HOME/dotfiles/scripts/dependencies.sh ]; then
   echo "Found dependencies.sh"
@@ -75,7 +79,9 @@ if [ -e $HOME/dotfiles/scripts/dependencies.sh ]; then
   
   success "Successfully ran dependencies.sh"
 else
-  warning "dependencies.sh not found. Some features may not work correctly."
+  fail "dependencies.sh not found"
+  fail "Cannot install the necessary dependencies for the installation."
+  exit 1
 fi
 
 
@@ -96,7 +102,8 @@ target_dir="$HOME/dotfiles"
 echo "Existing symbolic links pointing to the dotfiles directory:"
 find "$HOME" -maxdepth 1 -type l -exec sh -c 'readlink -f "$0" | grep -q "^$HOME/dotfiles"' {} \; -print
 
-wait_user "Check the symlinks above and press any key to continue or Ctrl+C to cancel..."
+user "Check the symlinks above"
+pause
 
 
 # remove all existing symbolic links pointing to the dotfiles directory
