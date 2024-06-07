@@ -175,6 +175,26 @@ fi
 
 
 echo ''
+echo "---------------- INSTALL DEPENDENCIES FOR BASH ----------------"
+echo "Installing necessary dependencies..."
+
+if [ -e $HOME/dotfiles/scripts/basic-dependencies.sh ]; then
+  echo "Found basic-dependencies.sh"
+  chmod +x $HOME/dotfiles/scripts/basic-dependencies.sh
+  
+  echo "installing basic-dependencies.sh"
+  sudo $HOME/dotfiles/scripts/basic-dependencies.sh
+  
+  success "Successfully ran basic-dependencies.sh"
+else
+  fail "basic-dependencies.sh not found"
+  fail "Cannot install the necessary dependencies for the installation."
+  exit 1
+fi
+
+
+
+echo ''
 echo "---------------- SETUP SYMLINKS ----------------"
 #if ! apt install stow -y > /dev/null; then
 #  fail "Error installing 'stow' package"
