@@ -9,7 +9,6 @@ success () {
 
 warning() {
   printf "[\033[38;5;208mWARN\033[0m] $1\n"
-  echo ''
 }
 
 fail () {
@@ -108,6 +107,68 @@ if [ -e $HOME/dotfiles/scripts/dependencies.sh ]; then
 else
   fail "dependencies.sh not found"
   fail "Cannot install the necessary dependencies for the installation."
+  exit 1
+fi
+
+
+echo ''
+echo "---------------- OPTIONS ----------------"
+echo ''
+echo "Select an option:"
+echo " 1) Only install .bash_aliases"
+echo " 2) Symlink all dotfiles & setup bash configurations"
+echo ''
+read -p "Enter option: " option
+echo ''
+
+
+if [ "$option" = "1" ]; then
+  echo "Option 1: Only install .bash_aliases"
+  if [ -f "$HOME/.bash_aliases" ]; then
+    warning "The file '.bash_aliases' already exists."
+
+    if [ -L "$HOME/.bash_aliases" ]; then
+      warning "The file '.bash_aliases' is a symbolic link."
+      warning "The file '.bash_aliases' links to: $(readlink -f $HOME/.bash_aliases)"
+    fi
+    
+    # Ask to overwrite the existing .bash_aliases file
+    if ask "Do you want to overwrite the existing .bash_aliases file?"; then
+      # If the file is a symbolic link, unlink it | if not, remove it
+      if [ -L "$HOME/.bash_aliases" ]; then
+        unlink "$HOME/.bash_aliases"
+        echo "Successfully unlinked .bash_aliases"
+      else
+        rm "$HOME/.bash_aliases"
+        echo "Successfully removed .bash_aliases"
+      fi
+
+      # Create a new symbolic link to the .bash_aliases file
+      if ask "Do you want to copy the .bash_aliases file? If not, a symbolic link will be created."; then
+        cp "$HOME/dotfiles/.bash_aliases" "$HOME/.bash_aliases"
+        success "Successfully copied .bash_aliases"
+      else
+        ln -s "$HOME/dotfiles/.bash_aliases" "$HOME/.bash_aliases"
+        success "Successfully symlinked .bash_aliases"
+      fi
+
+      # Source the .bash_aliases file
+      cd "$HOME"
+      source_file .bashrc .bash_aliases
+
+      exit 0
+    else
+      fail "Aborted."
+      exit 1
+    fi
+  else
+    cp "$HOME/dotfiles/.bash_aliases" "$HOME/.bash_aliases"
+    success "Successfully copied .bash_aliases"
+  fi
+elif [ "$option" = "2" ]; then
+  echo "Option 2: Symlink all dotfiles & setup bash configurations"
+else
+  fail "Invalid option"
   exit 1
 fi
 
