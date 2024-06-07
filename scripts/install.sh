@@ -87,7 +87,7 @@ echo -e "Installing dotfiles for \e[34m$user\e[0m in \e[36m$HOME\e[0m"
 echo " USER: $user"
 echo " HOME Folder: $HOME"
 
-user "Review the settings above"
+user "CONFIRM: Verify the user and home folder above"
 pause
 
 
@@ -129,7 +129,7 @@ target_dir="$HOME/dotfiles"
 echo "Existing symbolic links pointing to the dotfiles directory:"
 find "$HOME" -maxdepth 1 -type l -exec sh -c 'readlink -f "$0" | grep -q "^$HOME/dotfiles"' {} \; -print
 
-user "Check the symlinks above"
+user "CONFIRM: Remove all existing symbolic links pointing to the dotfiles directory | list above"
 pause
 
 
@@ -138,9 +138,7 @@ find "$HOME" -maxdepth 1 -type l -exec sh -c 'readlink -f "$0" | grep -q "^$HOME
 
 success "Successfully unlinked symbolic links pointing to $target_dir"
 
-
-
-# ----------------
+# -------------------
 
 cd "$HOME/dotfiles" || { fail "Failed to cd $HOME/dotfiles"; exit 1; }
 
