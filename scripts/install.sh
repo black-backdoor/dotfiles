@@ -240,3 +240,10 @@ cd "$HOME"
 
 source_file .bashrc .bash_aliases
 source_file .bashrc .bash_tools
+
+
+echo ''
+echo "---------------- INSTALLATION COMPLETE ----------------"
+echo "Please restart the terminal to apply the changes."
+echo "You can also run 'source ~/.bashrc' to apply the changes immediately."
+echo ''
