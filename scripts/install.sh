@@ -3,14 +3,6 @@
 # set -e  # Makes the script exit immediately if any command exits with a non-zero status.
 
 # ------- LOG -------
-wait_user () {
-  echo ''
-  printf "[\033[0;33m??\033[0m] $1\n"
-  printf " \033[0;32m>>>\033[0m Press any key to continue"
-  read -n 1 -s -r -p ''
-  echo ''
-}
-
 success () {
   printf "[\033[00;32mOK\033[0m] $1\n"
 }
@@ -26,8 +18,15 @@ fail () {
 }
 
 # -------------------
+wait_user () {
+  echo ''
+  printf "[\033[0;33m??\033[0m] $1\n"
+  printf " \033[0;32m>>>\033[0m Press any key to continue"
+  read -n 1 -s -r -p ''
+  echo ''
+}
 
-function ask() {
+ask() {
   printf "[\033[0;33m??\033[0m] $1\n"
   printf " \033[0;32m>>>\033[0m "
   read -p "(Y/n): " resp
