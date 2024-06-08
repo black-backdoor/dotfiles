@@ -30,5 +30,8 @@ sudo ~/dotfiles/scripts/install.sh
 
 
 
-## Links
-- [Stow has forever changed the way I manage my dotfiles | dreamsofautonomy](https://www.youtube.com/watch?v=y6XCebnB9gs)
+## Stow
+This command will create symlinks for the files in the current directory to the parent directory.
+```bash
+stow .
+```
