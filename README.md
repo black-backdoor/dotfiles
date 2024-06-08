@@ -1,6 +1,6 @@
 # dotfiles
 
-
+# .zsh NOT WORKING YET
 
 ## Configuration
 When installing the dotfiles, the following functionality is added:
