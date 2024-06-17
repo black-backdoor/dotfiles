@@ -17,7 +17,7 @@ sudo apt install git
 ```
 
 ```bash
-git clone URL
+git clone https://github.com/black-backdoor/dotfiles.git
 ```
 
 ```bash
