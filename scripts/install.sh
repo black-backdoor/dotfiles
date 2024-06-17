@@ -59,6 +59,7 @@ source_file() {
   else
     warning "The file '$file' is not sourced in the $config_file config."
     if ask "Do you want to modify $config_file to source $file?"; then
+      echo "" >> $config_file
       echo "if [ -f ~/$file ]; then" >> $config_file
       echo "   source ~/$file" >> $config_file
       echo "fi" >> $config_file
