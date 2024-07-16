@@ -1,0 +1,12 @@
+# Ignore script folder
+scripts
+
+# Ignore git files
+\.git
+.git
+\.gitignore
+\.gitattributes
+
+# Ignore git repository files
+^/README.*
+^/LICENSE.*
